@@ -12,9 +12,6 @@ public struct Tile {
 }
 
 public class Generator : MonoBehaviour {
-    const float widthMult = 1.73205080757f;
-    const float heightMult = 2;
-
     [SerializeField]
     int width;
     [SerializeField]
@@ -29,14 +26,14 @@ public class Generator : MonoBehaviour {
     [SerializeField]
     Color landColor;
 
-    Tile[,] tiles;
+    HexGrid<Tile> tiles;
     Mesh mesh;
 
     MeshFilter filter;
     new MeshRenderer renderer;
 
     void Start() {
-        tiles = new Tile[width, height];
+        tiles = new HexGrid<Tile>(width, height);
         mesh = new Mesh();
         mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 
@@ -62,7 +59,7 @@ public class Generator : MonoBehaviour {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 bool offset = y % 2 == 0;
-                Vector3 center = new Vector3((width * widthMult) / -2, (height * heightMult * 0.75f) / -2, 0) + new Vector3(x * widthMult + (widthMult * (offset ? 0.5f : 0)), y * 0.75f * heightMult, 0);
+                Vector3 center = tiles.GetGridCenter() + tiles.GetCenter(x, y);
 
                 for (int i = 0; i < 6; i++) {
                     triangles.Add(vertices.Count);
