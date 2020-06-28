@@ -26,9 +26,20 @@ public class Generator : MonoBehaviour {
     [SerializeField]
     Color landColor;
 
-    HexGrid<Tile> tiles;
-    Mesh mesh;
+    [SerializeField]
+    int seed;
+    [SerializeField]
+    float noiseRadius;
+    [SerializeField]
+    float noiseHeight;
+    [SerializeField]
+    float seaLevel;
 
+    HexGrid<Tile> tiles;
+
+    FastNoise noise;
+
+    Mesh mesh;
     MeshFilter filter;
     new MeshRenderer renderer;
 
@@ -42,7 +53,32 @@ public class Generator : MonoBehaviour {
 
         filter.mesh = mesh;
 
+        noise = new FastNoise(seed);
+        noise.SetFractalOctaves(4);
+        noise.SetFrequency(1f);
+
+        GenerateMap();
         CreateMesh();
+    }
+
+    void GenerateMap() {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                //sample in cylinder shape to get wrapping noise
+                Vector3 tileCenter = tiles.GetCenter(x, y);
+                float t = tileCenter.x / (width * HexGrid<Tile>.widthMult);
+                float r = t * 2 * Mathf.PI;
+
+                Vector3 samplePos = new Vector3(Mathf.Sin(r) * noiseRadius, tileCenter.y * noiseHeight * noiseRadius, Mathf.Cos(r) * noiseRadius);
+                float sample = noise.GetSimplexFractal(samplePos.x, samplePos.y, samplePos.z);
+
+                if (sample > seaLevel) {
+                    tiles[x, y].type = TileType.Land;
+                } else {
+                    tiles[x, y].type = TileType.Water;
+                }
+            }
+        }
     }
 
     void CreateMesh() {
@@ -58,8 +94,15 @@ public class Generator : MonoBehaviour {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                bool offset = y % 2 == 0;
                 Vector3 center = tiles.GetGridCenter() + tiles.GetCenter(x, y);
+                Tile tile = tiles[x, y];
+                Color color;
+
+                if (tile.type == TileType.Water) {
+                    color = waterColor;
+                } else {
+                    color = landColor;
+                }
 
                 for (int i = 0; i < 6; i++) {
                     triangles.Add(vertices.Count);
@@ -68,9 +111,9 @@ public class Generator : MonoBehaviour {
                     vertices.Add(center * tileSize);
                     vertices.Add((center + offsets[i]) * tileSize);
                     vertices.Add((center + offsets[(i + 1) % 6]) * tileSize);
-                    colors.Add(waterColor);
-                    colors.Add(waterColor);
-                    colors.Add(waterColor);
+                    colors.Add(color);
+                    colors.Add(color);
+                    colors.Add(color);
                 }
             }
         }

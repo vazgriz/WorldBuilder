@@ -200,12 +200,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff150fd9112eca40a1137bd1170e9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 80
-  height: 52
+  width: 160
+  height: 104
   tileSize: 1
-  marginSize: 0.9
+  marginSize: 1
   waterColor: {r: 0, g: 0, b: 1, a: 1}
   landColor: {r: 0, g: 1, b: 0, a: 1}
+  seed: 48
+  noiseRadius: 0.75
+  noiseHeight: 0.025
+  seaLevel: 0.25
 --- !u!4 &623264016
 Transform:
   m_ObjectHideFlags: 0
@@ -365,7 +369,7 @@ Camera:
   far clip plane: 10
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 80
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
