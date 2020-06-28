@@ -9,6 +9,7 @@ public enum TileType {
 
 public struct Tile {
     public TileType type;
+    public float mountainFactor;
 }
 
 public class Generator : MonoBehaviour {
@@ -24,7 +25,7 @@ public class Generator : MonoBehaviour {
     [SerializeField]
     Color waterColor;
     [SerializeField]
-    Color landColor;
+    Gradient landColor;
 
     [SerializeField]
     int seed;
@@ -34,6 +35,8 @@ public class Generator : MonoBehaviour {
     float noiseHeight;
     [SerializeField]
     float seaLevel;
+    [SerializeField]
+    float mountainLevel;
 
     HexGrid<Tile> tiles;
 
@@ -74,6 +77,7 @@ public class Generator : MonoBehaviour {
 
                 if (sample > seaLevel) {
                     tiles[x, y].type = TileType.Land;
+                    tiles[x, y].mountainFactor = Mathf.Clamp01(Mathf.InverseLerp(seaLevel, mountainLevel, sample));
                 } else {
                     tiles[x, y].type = TileType.Water;
                 }
@@ -101,7 +105,7 @@ public class Generator : MonoBehaviour {
                 if (tile.type == TileType.Water) {
                     color = waterColor;
                 } else {
-                    color = landColor;
+                    color = landColor.Evaluate(tile.mountainFactor);
                 }
 
                 for (int i = 0; i < 6; i++) {

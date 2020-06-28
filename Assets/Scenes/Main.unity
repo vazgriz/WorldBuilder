@@ -205,11 +205,40 @@ MonoBehaviour:
   tileSize: 1
   marginSize: 1
   waterColor: {r: 0, g: 0, b: 1, a: 1}
-  landColor: {r: 0, g: 1, b: 0, a: 1}
+  landColor:
+    serializedVersion: 2
+    key0: {r: 0, g: 1, b: 0, a: 1}
+    key1: {r: 0.735849, g: 0.43618372, b: 0, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 0.25882354}
+    key3: {r: 0.5882353, g: 0.5137255, b: 0.8745098, a: 0.25882354}
+    key4: {r: 0.5882353, g: 0.5137255, b: 0.8745098, a: 0.25882354}
+    key5: {r: 0.5882353, g: 0.5137255, b: 0.8745098, a: 0.25882354}
+    key6: {r: 0.5882353, g: 0.5137255, b: 0.8745098, a: 0.25882354}
+    key7: {r: 0.5882353, g: 0.5137255, b: 0.8745098, a: 0.25882354}
+    ctime0: 0
+    ctime1: 43369
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
   seed: 48
   noiseRadius: 0.75
   noiseHeight: 0.025
   seaLevel: 0.25
+  mountainLevel: 0.75
 --- !u!4 &623264016
 Transform:
   m_ObjectHideFlags: 0
