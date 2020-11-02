@@ -45,6 +45,10 @@ public class HexGrid<T> {
         new Vector2Int(1, -1),
     };
 
+    public static Vector2Int GetOffset(HexDirection direction) {
+        return offsets[(int)direction];
+    }
+
     public Vector2Int GetNeighbor(int x, int y, HexDirection direction) {
         var offset = offsets[(int)direction];
         return new Vector2Int(x, y) + offset;

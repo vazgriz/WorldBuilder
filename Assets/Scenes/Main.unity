@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 160
-  height: 104
+  height: 105
   tileSize: 1
   marginSize: 1
   waterColor: {r: 0, g: 0, b: 1, a: 1}
@@ -239,6 +239,8 @@ MonoBehaviour:
   noiseHeight: 0.025
   seaLevel: 0.25
   mountainLevel: 0.75
+  currentPrefab: {fileID: 7192682368006455014, guid: 572d8394bfeb4064b882185238c7bffb,
+    type: 3}
 --- !u!4 &623264016
 Transform:
   m_ObjectHideFlags: 0
